@@ -1,3 +1,8 @@
+# yii console commands
+/yii
+/yii_test
+/yii_test.bat
+
 # phpstorm project files
 .idea
 
@@ -14,7 +19,6 @@ Thumbs.db
 
 # composer vendor dir
 /vendor
-/web/assests
 
 # composer itself is not needed
 composer.phar
@@ -27,5 +31,5 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-tests/_output/*
-tests/_support/_generated
+# vagrant runtime
+/.vagrant
