@@ -54,7 +54,8 @@ use \yii\helpers\Html;
             Total: $<?= $total ?>
         </div>
         <div class="col-xs-2">
-            <?= Html::a('Order', ['cart/order'], ['class' => 'btn btn-success'])?>
+            <?= Html::a('T. Credito', ['cart/order'], ['class' => 'btn btn-success'])?>
+            <?= Html::a('Transferencia', ['cart/corder'], ['class' => 'btn btn-success'])?>
         </div>
     </div>
 </div>

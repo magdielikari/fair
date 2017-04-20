@@ -142,6 +142,17 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays about page.
+     *
+     * @return mixed
+     */
+    public function actionLogo()
+    {
+        return $this->render('logo');
+    }
+
+
+    /**
      * Signs user up.
      *
      * @return mixed

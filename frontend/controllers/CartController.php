@@ -7,6 +7,7 @@ use common\models\Product;
 use common\models\OrderItems;
 use yz\shoppingcart\ShoppingCart;
 use common\models\PaymentForm;
+use common\models\TransferForm;
 use yii\web\Request;
 use \Instapago\Api;
 
@@ -56,18 +57,23 @@ class CartController extends \yii\web\Controller
         }
     }
 
-    public function actionCashOrder()
+    public function actionCorder()
     {
         $order = new Order();
-
+        $model = new TransferForm();
         /* @var $cart ShoppingCart */
         $cart = \Yii::$app->cart;
 
         /* @var $products Product[] */
         $products = $cart->getPositions();
-        
-        if ($order->load(\Yii::$app->request->post())) {
+        $total = $cart->getCost();
+        $model->ip = \Yii::$app->request->getUserIP();
+        $model->amount = $total;
+        if ($model->load(\Yii::$app->request->post())) {
             $transaction = $order->getDb()->beginTransaction();
+            $order->data = $model->data;
+            $order->amount = $model->amount;
+            $order->ip = $model->ip;
             $order->save(false);
             // guarda la orden
             foreach($products as $product) {
@@ -88,13 +94,13 @@ class CartController extends \yii\web\Controller
             \Yii::$app->cart->removeAll();
 
             \Yii::$app->session->addFlash('success', 'Thanks for your order. We\'ll contact you soon.');
-            $order->sendEmail();
+            //$order->sendEmail();
 
             return $this->redirect('catalog/list');
         }
 
-        return $this->render('orderCash', [
-            'payment' => $payment,
+        return $this->render('corder', [
+            'model' => $model,
             'products' => $products,
             'total' => $total,
         ]);
